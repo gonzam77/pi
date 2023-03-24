@@ -1,27 +1,29 @@
 import {
     GET_GENRES,
     GET_ALL_VIDEOGAMES,
-    GET_VIDEOGAME_BY_ID,
     GET_VIDEOGAME_BY_NAME,
-    CREATE_VIDEOGAME
+    FILTER_BY_GENRES,
+    FILTER_BY_LOCATION,
+    ORDER_BY_RATING,
+    ORDER_BY_NAME
 }
     from "./actionTypes";
 import axios from "axios";
 
-export const getGenres = () => {
+export const getGenresDb = () => {
     return async function (dispatch) {
-        const response = await axios('http://localhost:3001/genres');
-        const data = response.data;
+        const response = await axios('http://localhost:3001/genres/db');
+        const data = response.data
         return dispatch({
             type: GET_GENRES,
             payload: data
         })
     }
-}
+};
 
 export const getAllVideogames = () => {
     return async function (dispatch) {
-        console.log("buscando")
+        //console.log("buscando")
         const response = await axios("http://localhost:3001/videogames");
         const data = response.data;
         return dispatch({
@@ -29,7 +31,7 @@ export const getAllVideogames = () => {
             payload: data,
         })
     }
-}
+};
 
 export const getVideogameByName = (name) => {
     return async function (dispatch) {
@@ -40,4 +42,47 @@ export const getVideogameByName = (name) => {
             payload: data,
         })
     }
-}
+};
+
+export const orderByName = (nameOrder) => {
+    return {
+        type: ORDER_BY_NAME,
+        payload: nameOrder
+    }
+};
+
+export const orderByRating = (ratingOrder) => {
+    return {
+        type: ORDER_BY_RATING,
+        payload: ratingOrder
+    }
+};
+
+export const filterByGenres = (genre) => {
+    return {
+        type: FILTER_BY_GENRES,
+        payload: genre
+    }
+};
+
+export const filterByLocation = (location) => {
+    if(location === "Database") {
+        return async function(dispatch) {
+            const response = await axios("http://localhost:3001/videogames/api")
+            const data = response.data
+            return dispatch({
+                type: FILTER_BY_LOCATION,
+                payload: data
+            })
+        }    
+    } else {
+        return async function (dispatch) {
+            const response = await axios("http://localhost:3001/videogames/db")
+            const data = response.data
+            return dispatch({
+                type:FILTER_BY_LOCATION,
+                payload: data
+            })
+        }
+    }
+};

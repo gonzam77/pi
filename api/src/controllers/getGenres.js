@@ -7,7 +7,6 @@ const getGenres = async () => {
     const data = response.data.results;
     //console.log(data);
     saveGenres(data);
-    return data;
 }
 
 module.exports = getGenres;

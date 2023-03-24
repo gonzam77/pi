@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./Form.module.css";
 import validation from "./validation";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,7 +7,7 @@ import * as actions from "../../redux/actions";
 
 
 export default function Form() {
-    const [inputs, setInputs] = useState({
+    const [videogame, setVideogame] = useState({
         name: "",
         description: "",
         image: "",
@@ -25,20 +26,25 @@ export default function Form() {
         released: "",
         genres: "",
     });
-    
+
     const dispatch = useDispatch();
     const genres = useSelector(state => state.genres);
-    
-    useEffect(()=>{
-        dispatch(actions.getGenres())
-        console.log(genres);
-    },[]);
+    const genresOptions = [];
+    const platforms = [];
+
+    useEffect(() => {
+        dispatch(actions.getGenresDb())
+    }, [dispatch]);
+
 
     function handleSubmit(event) {
         event.preventDefault();
         const errorsArray = Object.values(errors);
         if (errorsArray.length) window.alert("You must complete all fields.");
         else {
+            
+            axios.post("http://localhost:3001/videogames", videogame)
+            
             setErrros({
                 name: "",
                 description: "",
@@ -48,7 +54,7 @@ export default function Form() {
                 released: "",
                 genres: "",
             });
-            setInputs({
+            setVideogame({
                 name: "",
                 description: "",
                 image: "",
@@ -60,61 +66,78 @@ export default function Form() {
         };
     };
 
-    function handleGenres() {
-
+    function handleGenres(event) {
+        genresOptions.push(event.target.value);
+        setVideogame({
+            ...videogame,
+            genres: genresOptions
+        });
     };
 
-    function handleChange(event) {
-        setInputs({
-            ...inputs,
-            [event.target.name]: event.target.value
+    function handlePlatforms(event) {
+        platforms.push(event.target.value)
+        setVideogame({
+            ...videogame,
+            platforms: platforms
+
         })
+        
+    }
+
+    function handleChange(event) {
+        if (event.target.name !== "platforms" || event.target.name !== "genres") {
+            setVideogame({
+                ...videogame,
+                [event.target.name]: event.target.value
+            })
+
+        };
 
         setErrros(
             validation({
-                ...inputs,
+                ...videogame,
                 [event.target.name]: event.target.value
             })
-        )
+        );
     };
 
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label>Name:</label>
-                <input name="name" value={inputs.name} onChange={handleChange} placeholder="name..." type="" />
+                <input autoComplete="off" name="name" value={videogame.name} onChange={handleChange} placeholder="name..." type="" />
                 {errors.name !== "" && <p className={styles.danger}>{errors.name}</p>}
 
                 <label>Image</label>
-                <input name="image" value={inputs.image} onChange={handleChange} placeholder="" type="URL image..." />
+                <input autoComplete="off" name="image" value={videogame.image} onChange={handleChange} placeholder="" type="URL image..." />
                 {errors.image !== "" && <p className={styles.danger}>{errors.image}</p>}
 
                 <label>Description</label>
-                <textarea name="description" value={inputs.description} onChange={handleChange} placeholder="description..." type="" />
+                <textarea autoComplete="off" name="description" value={videogame.description} onChange={handleChange} placeholder="description..." type="" />
                 {errors.description !== "" && <p className={styles.danger}>{errors.description}</p>}
 
                 <label>Platforms</label>
-                <input name="platforms" value={inputs.platforms} onChange={handleChange} placeholder="platforms..." type="" />
+                <p>Add one by one</p>
+                <input autoComplete="off" name="platforms" value={videogame.platforms} onChange={handleChange} placeholder="platforms..." type="" />
                 {errors.platforms !== "" && <p className={styles.danger}>{errors.platforms}</p>}
-                
+                <button onClick={handlePlatforms} className={styles.addButton}>Add</button>
+
                 <select name="gender" onChange={handleGenres}>
-                    <option value="genres" disabled="disabled" selected>Select genres...</option>
-                    { genres ? 
-                        genres.map((genre,index) => {
+                    <option value={null} disabled="disabled" selected="selected">Select genres...</option>
+                    {genres ?
+                        genres.map((genre, index) => {
                             return (
-                                <option key={index} value={genre.id}>{genre.name}</option>
+                                <option key={index} value={genre}>{genre}</option>
                             )
                         }) : null
                     }
                 </select>
-                {/* {errors.genres !== "" && <p className={styles.danger}>{errors.genres}</p>} */}
-
                 <label>Released</label>
-                <input name="released" value={inputs.released} onChange={handleChange} placeholder="released..." type="" />
+                <input autoComplete="off" name="released" value={videogame.released} onChange={handleChange} placeholder="released..." type="date" />
                 {errors.released !== "" && <p className={styles.danger}>{errors.released}</p>}
 
                 <label>Rating</label>
-                <input name="rating" value={inputs.rating} onChange={handleChange} placeholder="rating..." type="" />
+                <input autoComplete="off" name="rating" value={videogame.rating} onChange={handleChange} placeholder="rating..." type="" />
                 {errors.rating !== "" && <p className={styles.danger}>{errors.rating}</p>}
 
                 <button className={styles.createButton} type="submit">Create</button>

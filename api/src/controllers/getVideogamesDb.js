@@ -10,6 +10,7 @@ const getVideogamesDb = async () => {
             },
         }
     });
+    console.log(videogames)
     return videogames;
 }
 

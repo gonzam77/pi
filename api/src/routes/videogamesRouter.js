@@ -27,7 +27,6 @@ router.get("/", async (req, res) => {
 
 router.get("/name", async (req, res) => {
     const { search } = req.query;
-    //console.log("buscando ->", search);
     try {
         const result = await getVideogameByName(search);
         return res.status(200).json(result);

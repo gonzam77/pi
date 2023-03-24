@@ -10,7 +10,7 @@
 }
 
 .form {
-    background-color: blueviolet;
+    background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -23,6 +23,10 @@
     font-size: 10px;
     color: red;
     margin-left: 10em;
+}
+
+.addButton {
+    width: 50px;
 }
 
 .createButton {
