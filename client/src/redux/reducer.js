@@ -1,4 +1,3 @@
-import { orderByRating } from "./actions"
 import {
     GET_ALL_VIDEOGAMES,
     GET_GENRES,
@@ -20,8 +19,8 @@ export default function reducer(state = initialState, { type, payload }) {
         case GET_ALL_VIDEOGAMES:
             return {
                 ...state,
-                videogames: [...state.allVideogames, payload],
-                allVideogames: [...state.allVideogames, payload]
+                videogames: payload,
+                allVideogames: payload
             }
         case GET_GENRES:
             return {
@@ -31,35 +30,69 @@ export default function reducer(state = initialState, { type, payload }) {
         case GET_VIDEOGAME_BY_NAME:
             return {
                 ...state,
-                videogames: [payload]
+                videogames: payload,
             }
         case ORDER_BY_NAME:
-            return {
-                ...state,
-                videogames: state.videogames.sort((x, y) => x.name.localeCompare(y.name))
+            if (payload === "Ascendente") {
+                return {
+                    ...state,
+                    videogames: state.videogames.sort((x, y) => x.name.localeCompare(y.name))
+                }
             }
-        // browsers.sort((x, y) => x.name.localeCompare(y.name))
+            if (payload === "Descendente") {
+                return {
+                    ...state,
+                    videogames: state.videogames.sort((x, y) => y.name.localeCompare(x.name))
+                }
+            }
+            return { ...state }
         case ORDER_BY_RATING:
-            return {
-                ...state,
-                videogames: state.videogames.sort((x, y) => x.rating - y.rating)
-                // browsers.sort((x, y) => x.year - y.year);
+            if (payload === "Ascendente") {
+                return {
+                    ...state,
+                    videogames: state.videogames.sort((x, y) => x.rating - y.rating)
+                    // browsers.sort((x, y) => x.year - y.year);
+                }
             }
+            if (payload === "Descendente") {
+                return {
+                    ...state,
+                    videogames: state.videogames.sort((x, y) => y.rating - x.rating)
+                }
+            }
+            return { ...state }
         case FILTER_BY_GENRES:
+            if (payload === "all") {
+                return {
+                    ...state,
+                    videogames: state.allVideogames
+                }
+            }
             return {
                 ...state,
                 videogames: state.allVideogames.filter(videogame => {
-                    const result = videogame.genres.map(genre => genre === payload)
-                    if(result.length) return videogame;
-                    else return null;
+                    if (videogame.genres.includes(payload)) return videogame
+                    return null
                 })
             }
         case FILTER_BY_LOCATION:
-            return {
-                ...state,
-                videogames: [payload]
-            }       
-
+            if(payload === "all") {
+                return {
+                    ...state,
+                    videogames: state.allVideogames
+                }
+            }
+            if(payload === "database"){
+                return {
+                    ...state,
+                    videogames: state.allVideogames.filter(videogame => videogame.createInDb)
+                }
+            } else {
+                return {
+                    ...state,
+                    videogames: state.allVideogames.filter(videogame => !videogame.createInDb)
+                }
+            }
         default:
             return { ...state }
     }

@@ -18,6 +18,11 @@ module.exports = (sequelize) => {
       allowNull: false,
 
     },
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue: true,
+    },
     platforms: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,

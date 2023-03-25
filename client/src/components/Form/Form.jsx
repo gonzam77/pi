@@ -42,9 +42,9 @@ export default function Form() {
         const errorsArray = Object.values(errors);
         if (errorsArray.length) window.alert("You must complete all fields.");
         else {
-            
+
             axios.post("http://localhost:3001/videogames", videogame)
-            
+
             setErrros({
                 name: "",
                 description: "",
@@ -81,7 +81,7 @@ export default function Form() {
             platforms: platforms
 
         })
-        
+
     }
 
     function handleChange(event) {
@@ -124,12 +124,13 @@ export default function Form() {
 
                 <select name="gender" onChange={handleGenres}>
                     <option value={null} disabled="disabled" selected="selected">Select genres...</option>
-                    {genres ?
-                        genres.map((genre, index) => {
-                            return (
-                                <option key={index} value={genre}>{genre}</option>
-                            )
-                        }) : null
+                    {
+                        genres ?
+                            genres.map((genre, index) => {
+                                return (
+                                    <option key={index} value={genre}>{genre}</option>
+                                )
+                            }) : null
                     }
                 </select>
                 <label>Released</label>
