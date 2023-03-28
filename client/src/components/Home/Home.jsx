@@ -86,7 +86,6 @@ export default function Home() {
                 {
                     currentVideogames.length ? (
                         currentVideogames.map((game, index) => {
-                            console.log(game.genres);
                             return (
                                 <Card
                                     key={index}

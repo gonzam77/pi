@@ -70,4 +70,4 @@ export const filterByLocation = (location) => {
         type: FILTER_BY_LOCATION,
         payload: location
     }
-}
+};

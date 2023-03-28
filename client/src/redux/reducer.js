@@ -94,14 +94,19 @@ export default function reducer(state = initialState, { type, payload }) {
                 }
             }
             if (payload === "database") {
+                const result = state.videogames.filter(videogame => {
+                    console.log("videogame", videogame);
+                    return videogame.id === 999999
+                } )
+                console.log(result);
                 return {
                     ...state,
-                    videogames: state.allVideogames.filter(videogame => videogame.createdInDb)
+                    videogames: result
                 }
             } else {
                 return {
                     ...state,
-                    videogames: state.allVideogames.filter(videogame => !videogame.createdInDb)
+                    videogames: state.allVideogames.filter(videogame => (typeof videogame.id === "number"))
                 }
             }
         default:
