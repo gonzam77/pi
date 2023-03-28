@@ -11,13 +11,13 @@ const getVideogamesApi = async () => {
         const response = await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${page}`)
         const data = response.data.results;
         const videogamesByPage = data.map(game => {
-            //const platforms = game.platforms.map(obj => obj.platform.name);
             const genres = game.genres.map(genre => genre.name);
             return ({
                 id: game.id,
                 name: game.name,
                 background_image: game.background_image,                
                 genres: genres,
+                rating: game.rating,
             })        
         })
         videogamesByPage.forEach(game => {

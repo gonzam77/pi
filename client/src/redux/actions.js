@@ -23,7 +23,6 @@ export const getGenresDb = () => {
 
 export const getAllVideogames = () => {
     return async function (dispatch) {
-        //console.log("buscando")
         const response = await axios("http://localhost:3001/videogames");
         const data = response.data;
         return dispatch({
@@ -65,24 +64,10 @@ export const filterByGenres = (genre) => {
     }
 };
 
+
 export const filterByLocation = (location) => {
-    if(location === "Database") {
-        return async function(dispatch) {
-            const response = await axios("http://localhost:3001/videogames/api")
-            const data = response.data
-            return dispatch({
-                type: FILTER_BY_LOCATION,
-                payload: data
-            })
-        }    
-    } else {
-        return async function (dispatch) {
-            const response = await axios("http://localhost:3001/videogames/db")
-            const data = response.data
-            return dispatch({
-                type:FILTER_BY_LOCATION,
-                payload: data
-            })
-        }
+    return {
+        type: FILTER_BY_LOCATION,
+        payload: location
     }
-};
+}

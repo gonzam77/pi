@@ -10,7 +10,6 @@ export default function Home() {
     const dispatch = useDispatch()
     const videogames = useSelector(state => state.videogames);
     const genres = useSelector(state => state.genres);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [videogamesPerPage, setVideogamesPerPage] = useState(15)
     const indexOfLastVideogame = currentPage * videogamesPerPage;
@@ -25,7 +24,6 @@ export default function Home() {
     useEffect(() => {
         if (!videogames.length) dispatch(actions.getAllVideogames());
         dispatch(actions.getGenresDb());
-
     }, [])
 
     function handleOrderByName(event) {
@@ -49,17 +47,17 @@ export default function Home() {
         <div>
             <div>
                 <select name="orderByName" onChange={handleOrderByName}>
-                    <option value="order" disabled="disabled" selected>Order by name...</option>
+                    <option value="defaulValue" disabled="disabled" selected="defaultValue">Order by name...</option>
                     <option value="Ascendente">Ascendente</option>
                     <option value="Descendente">Descendente</option>
                 </select>
                 <select name="orderByRating" onChange={handleOrderByRating}>
-                    <option value="order" disabled="disabled" selected>Order by rating...</option>
+                    <option value="defaulValue" disabled="disabled" selected="defaultValue">Order by rating...</option>
                     <option value="Ascendente">Ascendente</option>
                     <option value="Descendente">Descendente</option>
                 </select>
                 <select name="gender" onChange={handleFilterByGenres}>
-                    <option value="filter" disabled="disabled" selected>Filter by genres...</option>
+                    <option value="defaulValue" disabled="disabled" selected="defaultValue">Filter by genres...</option>
                     <option value="all">All</option>
                     {
                         genres ?
@@ -69,10 +67,9 @@ export default function Home() {
                                 )
                             }) : null
                     }
-
                 </select>
                 <select name="location" onChange={handleFilterByLocation}>
-                    <option value="filter" disabled="disabled" selected>Filter by location...</option>
+                    <option value="defaulValue" disabled="disabled" selected="defaultValue">Filter by location...</option>
                     <option value="all">All</option>
                     <option value="database">Database</option>
                     <option value="api">API</option>
@@ -86,13 +83,13 @@ export default function Home() {
                 />
             </div>
             <div className={styles.container}>
-
                 {
                     currentVideogames.length ? (
-                        currentVideogames.map(game => {
+                        currentVideogames.map((game, index) => {
+                            console.log(game.genres);
                             return (
                                 <Card
-                                    key={game.id}
+                                    key={index}
                                     id={game.id}
                                     name={game.name}
                                     image={game.background_image}

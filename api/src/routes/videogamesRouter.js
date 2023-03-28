@@ -15,11 +15,8 @@ router.get("/", async (req, res) => {
     try {
         const videogamesApi = await getVideogamesApi();
         const videogamesDb = await getVideogamesDb();
-        //console.log("videogamesApi", videogamesApi)
-        //console.log("videogamesDb", videogamesDb)
         if(videogamesDb.length) {
             const allVideogames = videogamesDb.concat(videogamesApi);
-            //console.log("allVideogames", allVideogames);
             return res.status(200).json(allVideogames);
         }
         return res.status(200).json(videogamesApi);

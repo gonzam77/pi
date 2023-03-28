@@ -1,9 +1,31 @@
 .card {
-    border: 2px solid blue;
-    border-radius: 2px;
+    color: blueviolet;
+    border: 2px solid rgb(184, 10, 169);
+    border-radius: 20px;
     background-color: rgba(199, 160, 231, 0.349);
     max-width: 300px;
     max-height: 600px;
     margin: 10px;
     padding:5px;
+}
+
+.link {
+    color:rgb(184, 10, 169);
+    text-decoration: none;
+}
+
+.link:link {
+    text-decoration: none;
+}
+
+.link:visited {
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: none;
+}
+
+.link:active {
+    text-decoration: none;
 }

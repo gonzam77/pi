@@ -16,6 +16,7 @@ export default function Detail() {
                     setVideogame(data);
                 }
             })
+        return setVideogame({});
     }, [id])
 
     return (

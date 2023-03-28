@@ -15,6 +15,7 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, { type, payload }) {
+    const fixedBugs = { prueba: 1 }
     switch (type) {
         case GET_ALL_VIDEOGAMES:
             return {
@@ -33,35 +34,45 @@ export default function reducer(state = initialState, { type, payload }) {
                 videogames: payload,
             }
         case ORDER_BY_NAME:
+
+        // browsers.sort((x, y) => x.name.localeCompare(y.name));
             if (payload === "Ascendente") {
+                const videogamesOrdered = state.allVideogames.sort((a, b) => a.name.localeCompare(b.name));
                 return {
                     ...state,
-                    videogames: state.videogames.sort((x, y) => x.name.localeCompare(y.name))
+                    videogames: videogamesOrdered.concat(fixedBugs)
                 }
+
             }
             if (payload === "Descendente") {
+                const videogamesOrdered = state.allVideogames.sort((a, b) => b.name.localeCompare(a.name));
                 return {
                     ...state,
-                    videogames: state.videogames.sort((x, y) => y.name.localeCompare(x.name))
+                    videogames: videogamesOrdered.concat(fixedBugs)
                 }
+
             }
             return { ...state }
         case ORDER_BY_RATING:
             if (payload === "Ascendente") {
+                const videogamesOrdered = state.videogames.sort((a, b) => a.rating - b.rating);
                 return {
                     ...state,
-                    videogames: state.videogames.sort((x, y) => x.rating - y.rating)
-                    // browsers.sort((x, y) => x.year - y.year);
+                    videogames: videogamesOrdered.concat(fixedBugs)
                 }
+
             }
             if (payload === "Descendente") {
+                const videogamesOrdered = state.videogames.sort((a, b) => b.rating - a.rating);
                 return {
                     ...state,
-                    videogames: state.videogames.sort((x, y) => y.rating - x.rating)
+                    videogames: videogamesOrdered.concat(fixedBugs)
                 }
+
             }
             return { ...state }
         case FILTER_BY_GENRES:
+
             if (payload === "all") {
                 return {
                     ...state,
@@ -76,21 +87,21 @@ export default function reducer(state = initialState, { type, payload }) {
                 })
             }
         case FILTER_BY_LOCATION:
-            if(payload === "all") {
+            if (payload === "all") {
                 return {
                     ...state,
                     videogames: state.allVideogames
                 }
             }
-            if(payload === "database"){
+            if (payload === "database") {
                 return {
                     ...state,
-                    videogames: state.allVideogames.filter(videogame => videogame.createInDb)
+                    videogames: state.allVideogames.filter(videogame => videogame.createdInDb)
                 }
             } else {
                 return {
                     ...state,
-                    videogames: state.allVideogames.filter(videogame => !videogame.createInDb)
+                    videogames: state.allVideogames.filter(videogame => !videogame.createdInDb)
                 }
             }
         default:

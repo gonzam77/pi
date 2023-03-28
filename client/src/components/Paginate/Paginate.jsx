@@ -8,18 +8,18 @@ export default function Paginate({ videogamesPerPage, videogames, paginate }) {
         pageNumbers.push(i);
     }
     return (
-        <nav className="">
-            <ul>
+        <div className={styles.container}>
+            <ul className="">
                 {pageNumbers &&
                     pageNumbers.map((number, index) => {
                         return (
                             <li key={index} className={styles.pagination}>
-                                <a href onClick={() => paginate(number)}>{number},</a>
+                                <a className={styles.page} href onClick={() => paginate(number)}>{number}</a>
                             </li>
 
                         )
                     })}
             </ul>
-        </nav>
+        </div>
     )
 }
