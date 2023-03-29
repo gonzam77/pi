@@ -35,7 +35,7 @@ export default function reducer(state = initialState, { type, payload }) {
             }
         case ORDER_BY_NAME:
 
-        // browsers.sort((x, y) => x.name.localeCompare(y.name));
+            // browsers.sort((x, y) => x.name.localeCompare(y.name));
             if (payload === "Ascendente") {
                 const videogamesOrdered = state.allVideogames.sort((a, b) => a.name.localeCompare(b.name));
                 return {
@@ -55,7 +55,7 @@ export default function reducer(state = initialState, { type, payload }) {
             return { ...state }
         case ORDER_BY_RATING:
             if (payload === "Ascendente") {
-                const videogamesOrdered = state.videogames.sort((a, b) => a.rating - b.rating);
+                const videogamesOrdered = state.videogames.sort((a, b) => b.rating - a.rating);
                 return {
                     ...state,
                     videogames: videogamesOrdered.concat(fixedBugs)
@@ -63,7 +63,7 @@ export default function reducer(state = initialState, { type, payload }) {
 
             }
             if (payload === "Descendente") {
-                const videogamesOrdered = state.videogames.sort((a, b) => b.rating - a.rating);
+                const videogamesOrdered = state.videogames.sort((a, b) => a.rating - b.rating);
                 return {
                     ...state,
                     videogames: videogamesOrdered.concat(fixedBugs)
@@ -87,28 +87,29 @@ export default function reducer(state = initialState, { type, payload }) {
                 })
             }
         case FILTER_BY_LOCATION:
-            if (payload === "all") {
-                return {
-                    ...state,
-                    videogames: state.allVideogames
-                }
-            }
+
+            console.log(payload);
             if (payload === "database") {
-                const result = state.videogames.filter(videogame => {
-                    console.log("videogame", videogame);
-                    return videogame.id === 999999
-                } )
-                console.log(result);
                 return {
                     ...state,
-                    videogames: result
-                }
-            } else {
-                return {
-                    ...state,
-                    videogames: state.allVideogames.filter(videogame => (typeof videogame.id === "number"))
+                    videogames: state.allVideogames.filter(videogame => {
+                        console.log(state.videogames)
+                        return videogame.createdInDb
+                    })
+
                 }
             }
+            if (payload === "api") {
+                return {
+                    ...state,
+                    videogames: state.allVideogames.filter(videogame => typeof videogame.id === "number")
+                }
+            }
+            return {
+                ...state,
+                videogames: state.allVideogames
+            }
+
         default:
             return { ...state }
     }

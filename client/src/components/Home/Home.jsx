@@ -24,21 +24,25 @@ export default function Home() {
     useEffect(() => {
         if (!videogames.length) dispatch(actions.getAllVideogames());
         dispatch(actions.getGenresDb());
-    }, [])
+    }, [dispatch])
 
     function handleOrderByName(event) {
+        setCurrentPage(1);
         dispatch(actions.orderByName(event.target.value))
 
     }
     function handleOrderByRating(event) {
+        setCurrentPage(1);
         dispatch(actions.orderByRating(event.target.value))
     }
-
+    
     function handleFilterByLocation(event) {
+        setCurrentPage(1);
         dispatch(actions.filterByLocation(event.target.value))
     }
 
     function handleFilterByGenres(event) {
+        setCurrentPage(1);
         dispatch(actions.filterByGenres(event.target.value))
     }
 

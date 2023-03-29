@@ -4,6 +4,7 @@ const getVideogameById = require("../controllers/getVideogamesById");
 const createVideogame = require("../controllers/createVideogame");
 const getVideogamesApi = require("../controllers/getVideogamesApi");
 const getVideogamesDb = require("../controllers/getVideogamesDb");
+const getVideogameByIdDb = require("../controllers/getVideogameByIdDb");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -15,13 +16,13 @@ router.get("/", async (req, res) => {
     try {
         const videogamesApi = await getVideogamesApi();
         const videogamesDb = await getVideogamesDb();
-        if(videogamesDb.length) {
+        if (videogamesDb.length) {
             const allVideogames = videogamesDb.concat(videogamesApi);
             return res.status(200).json(allVideogames);
         }
         return res.status(200).json(videogamesApi);
     } catch (error) {
-        return res.status(400).json({error: error.message});
+        return res.status(400).json({ error: error.message });
     }
 })
 
@@ -38,11 +39,18 @@ router.get("/name", async (req, res) => {
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await getVideogameById(Number(id));
-        return res.status(200).json(result);
+        if (id.includes("-")) {
+            const result = await getVideogameByIdDb(id);
+            return res.status(200).json(result)
+        } else {
+            const result = await getVideogameById(Number(id));
+            return res.status(200).json(result)
+        }
     } catch (error) {
-        return res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message })
     }
+
+
 })
 
 

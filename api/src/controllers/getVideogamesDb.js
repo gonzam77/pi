@@ -16,6 +16,7 @@ const getVideogamesDb = async () => {
     const videogames = data.map(game => {
         return {
             id: game.id,
+            createdInDb: game.createdInDb,
             name: game.name,
             description: game.description,
             background_image: game.image,

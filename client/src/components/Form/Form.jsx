@@ -39,32 +39,29 @@ export default function Form() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        const errorsArray = Object.values(errors);
-        if (errorsArray.length) window.alert("You must complete all fields.");
-        else {
 
-            axios.post("http://localhost:3001/videogames", videogame)
+        axios.post("http://localhost:3001/videogames", videogame)
 
-            setErrros({
-                name: "",
-                description: "",
-                image: "",
-                platforms: "",
-                rating: "",
-                released: "",
-                genres: "",
-            });
-            setVideogame({
-                name: "",
-                description: "",
-                image: "",
-                platforms: [],
-                rating: "",
-                released: "",
-                genres: [],
-            });
-        };
+        setErrros({
+            name: "",
+            description: "",
+            image: "",
+            platforms: "",
+            rating: "",
+            released: "",
+            genres: "",
+        });
+        setVideogame({
+            name: "",
+            description: "",
+            image: "",
+            platforms: [],
+            rating: "",
+            released: "",
+            genres: [],
+        });
     };
+
 
     function handleGenres(event) {
         genresOptions.push(event.target.value);
@@ -75,13 +72,14 @@ export default function Form() {
     };
 
     function handlePlatforms(event) {
-        platforms.push(event.target.value)
+        event.preventDefault();
+        platforms.push(videogame.platforms)
         setVideogame({
             ...videogame,
             platforms: platforms
 
         })
-
+        videogame.platforms = "";
     }
 
     function handleChange(event) {
@@ -92,7 +90,6 @@ export default function Form() {
             })
 
         };
-
         setErrros(
             validation({
                 ...videogame,
