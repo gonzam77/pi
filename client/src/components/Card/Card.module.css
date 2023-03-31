@@ -6,11 +6,15 @@
     max-width: 300px;
     max-height: 600px;
     margin: 10px;
-    padding:5px;
+    padding: 5px;
+}
+
+.image {
+    border-radius: 10px;
 }
 
 .link {
-    color:rgb(184, 10, 169);
+    color: rgb(184, 10, 169);
     text-decoration: none;
 }
 
@@ -29,3 +33,4 @@
 .link:active {
     text-decoration: none;
 }
+

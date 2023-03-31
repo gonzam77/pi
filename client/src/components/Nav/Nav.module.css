@@ -8,6 +8,7 @@
     align-items: center;
     background: rgb(119, 28, 107);
     background: radial-gradient(circle, rgb(119, 43, 108) 0%, rgba(22, 7, 22, 0.169) 100%);
+    background-image: url("../../assets/nav-img.jpg");
 }
 
 .searchBar {

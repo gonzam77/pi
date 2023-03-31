@@ -14,7 +14,6 @@ export default function SearchBar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-
     function search() {
         dispatch(actions.getVideogameByName(videogame.name));
         setSearching({
@@ -49,7 +48,6 @@ export default function SearchBar() {
             {
                searching.active ? <button className={styles.searchButton} onClick={clean}>Clean</button> : null
             }
-
         </div>
 
     )

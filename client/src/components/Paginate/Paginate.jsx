@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Paginate.module.css"
 
 export default function Paginate({ videogamesPerPage, videogames, paginate }) {
+    
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(videogames / videogamesPerPage); i++) {

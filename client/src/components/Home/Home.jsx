@@ -5,11 +5,11 @@ import * as actions from "../../redux/actions"
 import styles from "./Home.module.css"
 import Paginate from "../Paginate/Paginate";
 
-
 export default function Home() {
     const dispatch = useDispatch()
     const videogames = useSelector(state => state.videogames);
     const genres = useSelector(state => state.genres);
+    const [render, setRender] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [videogamesPerPage, setVideogamesPerPage] = useState(15)
     const indexOfLastVideogame = currentPage * videogamesPerPage;
@@ -20,7 +20,6 @@ export default function Home() {
         setCurrentPage(pageNumber)
     }
 
-
     useEffect(() => {
         if (!videogames.length) dispatch(actions.getAllVideogames());
         dispatch(actions.getGenresDb());
@@ -29,11 +28,12 @@ export default function Home() {
     function handleOrderByName(event) {
         setCurrentPage(1);
         dispatch(actions.orderByName(event.target.value))
-
+        setRender(`render${event.target.value}`)
     }
     function handleOrderByRating(event) {
         setCurrentPage(1);
         dispatch(actions.orderByRating(event.target.value))
+        setRender(`render${event.target.value}`)
     }
     
     function handleFilterByLocation(event) {
@@ -45,7 +45,6 @@ export default function Home() {
         setCurrentPage(1);
         dispatch(actions.filterByGenres(event.target.value))
     }
-
 
     return (
         <div>
@@ -100,7 +99,7 @@ export default function Home() {
                                 />
                             )
                         })
-                    ) : <h1>LOADING...</h1>
+                    ) : <h1 className={styles.loading}>LOADING...</h1>
                 }
             </div>
         </div>

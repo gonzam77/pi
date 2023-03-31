@@ -17,40 +17,20 @@ export default function Form() {
         genres: [],
     });
 
-    const [errors, setErrros] = useState({
-        name: "",
-        description: "",
-        image: "",
-        platforms: "",
-        rating: "",
-        released: "",
-        genres: "",
-    });
+    const [errors, setErrros] = useState({});
 
     const dispatch = useDispatch();
     const genres = useSelector(state => state.genres);
-    const genresOptions = [];
-    const platforms = [];
 
     useEffect(() => {
         dispatch(actions.getGenresDb())
     }, [dispatch]);
 
-
     function handleSubmit(event) {
         event.preventDefault();
-
+        
         axios.post("http://localhost:3001/videogames", videogame)
-
-        setErrros({
-            name: "",
-            description: "",
-            image: "",
-            platforms: "",
-            rating: "",
-            released: "",
-            genres: "",
-        });
+        setErrros({});
         setVideogame({
             name: "",
             description: "",
@@ -60,26 +40,24 @@ export default function Form() {
             released: "",
             genres: [],
         });
+
     };
 
-
     function handleGenres(event) {
-        genresOptions.push(event.target.value);
         setVideogame({
             ...videogame,
-            genres: genresOptions
+            genres: [...videogame.genres, event.target.value]
         });
     };
 
     function handlePlatforms(event) {
         event.preventDefault();
-        platforms.push(videogame.platforms)
         setVideogame({
             ...videogame,
-            platforms: platforms
+            platforms: [...videogame.platforms, event.target.form.platforms.value]
 
         })
-        videogame.platforms = "";
+        event.target.form.platforms.value = ""
     }
 
     function handleChange(event) {
@@ -106,7 +84,7 @@ export default function Form() {
                 {errors.name !== "" && <p className={styles.danger}>{errors.name}</p>}
 
                 <label>Image</label>
-                <input autoComplete="off" name="image" value={videogame.image} onChange={handleChange} placeholder="" type="URL image..." />
+                <input autoComplete="off" name="image" value={videogame.image} onChange={handleChange} placeholder="image..." type="URL image..." />
                 {errors.image !== "" && <p className={styles.danger}>{errors.image}</p>}
 
                 <label>Description</label>
@@ -114,10 +92,9 @@ export default function Form() {
                 {errors.description !== "" && <p className={styles.danger}>{errors.description}</p>}
 
                 <label>Platforms</label>
-                <p>Add one by one</p>
-                <input autoComplete="off" name="platforms" value={videogame.platforms} onChange={handleChange} placeholder="platforms..." type="" />
+                <input autoComplete="off" name="platforms" placeholder="platforms..." type="text" />
                 {errors.platforms !== "" && <p className={styles.danger}>{errors.platforms}</p>}
-                <button onClick={handlePlatforms} className={styles.addButton}>Add</button>
+                <button onClick={handlePlatforms} className={styles.add}>Add</button>
 
                 <select name="gender" onChange={handleGenres}>
                     <option value={null} disabled="disabled" selected="selected">Select genres...</option>
@@ -130,6 +107,12 @@ export default function Form() {
                             }) : null
                     }
                 </select>
+                <div>
+                    {
+                        videogame.genres.map((genre, index) => (<h4 key={index}>{genre}</h4>))
+                    }
+                </div>
+
                 <label>Released</label>
                 <input autoComplete="off" name="released" value={videogame.released} onChange={handleChange} placeholder="released..." type="date" />
                 {errors.released !== "" && <p className={styles.danger}>{errors.released}</p>}

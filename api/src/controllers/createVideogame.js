@@ -11,7 +11,6 @@ const createVideogame = async (body) => {
     rating,
   });
 
-
   for (let i = 0; i < genres.length; i++) {
     const genre = await Genres.findOne({ where: { name: genres[i] } })
     videogame.addGenres(genre);

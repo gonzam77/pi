@@ -15,7 +15,6 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, { type, payload }) {
-    const fixedBugs = { prueba: 1 }
     switch (type) {
         case GET_ALL_VIDEOGAMES:
             return {
@@ -34,21 +33,18 @@ export default function reducer(state = initialState, { type, payload }) {
                 videogames: payload,
             }
         case ORDER_BY_NAME:
-
-            // browsers.sort((x, y) => x.name.localeCompare(y.name));
             if (payload === "Ascendente") {
-                const videogamesOrdered = state.allVideogames.sort((a, b) => a.name.localeCompare(b.name));
+                const videogamesOrdered = state.videogames.sort((a, b) => a.name.localeCompare(b.name));
                 return {
                     ...state,
-                    videogames: videogamesOrdered.concat(fixedBugs)
+                    videogames: videogamesOrdered
                 }
-
             }
             if (payload === "Descendente") {
-                const videogamesOrdered = state.allVideogames.sort((a, b) => b.name.localeCompare(a.name));
+                const videogamesOrdered = state.videogames.sort((a, b) => b.name.localeCompare(a.name));
                 return {
                     ...state,
-                    videogames: videogamesOrdered.concat(fixedBugs)
+                    videogames: videogamesOrdered
                 }
 
             }
@@ -58,15 +54,14 @@ export default function reducer(state = initialState, { type, payload }) {
                 const videogamesOrdered = state.videogames.sort((a, b) => b.rating - a.rating);
                 return {
                     ...state,
-                    videogames: videogamesOrdered.concat(fixedBugs)
+                    videogames: videogamesOrdered
                 }
-
             }
             if (payload === "Descendente") {
                 const videogamesOrdered = state.videogames.sort((a, b) => a.rating - b.rating);
                 return {
                     ...state,
-                    videogames: videogamesOrdered.concat(fixedBugs)
+                    videogames: videogamesOrdered
                 }
 
             }
@@ -81,7 +76,7 @@ export default function reducer(state = initialState, { type, payload }) {
             }
             return {
                 ...state,
-                videogames: state.allVideogames.filter(videogame => {
+                videogames: state.videogames.filter(videogame => {
                     if (videogame.genres.includes(payload)) return videogame
                     return null
                 })
@@ -96,7 +91,6 @@ export default function reducer(state = initialState, { type, payload }) {
                         console.log(state.videogames)
                         return videogame.createdInDb
                     })
-
                 }
             }
             if (payload === "api") {

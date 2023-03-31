@@ -49,10 +49,7 @@ router.get("/:id", async (req, res) => {
     } catch (error) {
         return res.status(400).json({ error: error.message })
     }
-
-
 })
-
 
 router.post("/", async (req, res) => {
     try {

@@ -9,7 +9,7 @@ const getVideogameByName = async (name) => {
     const videogamesDB = await Videogame.findAll({
         where: {
             name: {
-                [Op.iLike]: `%${name}%`,
+                [Op.iLike]: `${name}`,
             },
         },
     }, {
@@ -35,7 +35,7 @@ const getVideogameByName = async (name) => {
                 
                 id: data.id,
                 name: data.name,
-                image: data.background_image,
+                background_image: data.background_image ? data.background_image : "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg",
                 platforms: platforms,
                 description: data.description ? data.description : "No description",
                 released: data.released,

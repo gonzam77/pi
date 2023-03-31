@@ -1,5 +1,4 @@
 export default function validation({ name, description, image, platforms, rating, released, genres }) {
-
     var errors = {
         name: "",
         description: "",
@@ -22,7 +21,7 @@ export default function validation({ name, description, image, platforms, rating
     if (Number(rating) > 10) {
         errors.rating = "Rating have to be less than 10."
     }
-    
+
     if (Number(rating) * 10 !== Math.floor(Number(rating) * 10)) {
         errors.rating = "Rating have to be a decimal or integer number"
     }
@@ -31,6 +30,9 @@ export default function validation({ name, description, image, platforms, rating
     }
     if (!platforms.length) {
         errors.platforms = "A platforms is needed"
+    }
+    if (!genres.length) {
+        errors.genres = "A platforms is needed"
     }
     if (!description) {
         errors.description = "A description is needed";

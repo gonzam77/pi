@@ -6,9 +6,7 @@ const getGenresDb = require("../controllers/getGenresDb");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-
 const router = Router();
-
 
 router.get("/", async (req, res) => {
     try {
@@ -30,6 +28,5 @@ router.get("/db", async (req, res) => {
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-
 
 module.exports = router;

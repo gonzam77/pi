@@ -23,7 +23,6 @@ const getVideogameByIdDb = async (id) => {
                 rating: response.rating,
                 genres: genres
             }
-    
 }
 
 

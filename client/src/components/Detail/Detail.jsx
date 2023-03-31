@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
+import styles from "./Detail.module.css"
 
 export default function Detail() {
     const [videogame, setVideogame] = useState({});
     const { id } = useParams();
-
 
     useEffect(() => {
         fetch(`http://localhost:3001/videogames/${id}`)
@@ -20,18 +20,21 @@ export default function Detail() {
     }, [id])
 
     return (
-        <div>
+        <div className={styles.container}>
             {
                 videogame.id ? (
                     <div>
                         <h1>{videogame.name}</h1>
-                        <img src={videogame.image} alt={videogame.name} width={"300px"} />
+                        <img className={styles.img} src={videogame.image} alt={videogame.name} width={"300px"} />
                         <h4>ID:{videogame.id}</h4>
                         <h4>Genres: {videogame.genres}</h4>
                         <h4>Platforms: {videogame.platforms}</h4>
                         <h5>Released: {videogame.released}</h5>
                         <h5>Rating: {videogame.rating}</h5>
-                        {videogame.description}
+                        <h4>Descripcion:</h4>
+                        <div>
+                            {videogame.description}
+                        </div>
                     </div>) :
                     <h1>LOADING...</h1>
             }

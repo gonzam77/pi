@@ -8,11 +8,10 @@ export default function Card({id, name, image, genres}) {
                 <Link to={`/detail/${id}`} className={styles.link} >
                     <h3>{name}</h3>
                 </Link>
-                <img src={image} alt={name} width={"300px"} />
+                <img className={styles.image} src={image} alt={name} width={"300px"} />
                 <h4>Genero: {genres}</h4>
             </div>
         )
-
     }
     return null
 
