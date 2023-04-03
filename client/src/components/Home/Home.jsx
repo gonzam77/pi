@@ -46,13 +46,15 @@ export default function Home() {
         dispatch(actions.filterByGenres(event.target.value))
     }
 
+   
+
     return (
         <div>
             <div>
                 <select name="orderByName" onChange={handleOrderByName}>
                     <option value="defaulValue" disabled="disabled" selected="defaultValue">Order by name...</option>
-                    <option value="Ascendente">Ascendente</option>
-                    <option value="Descendente">Descendente</option>
+                    <option value="Ascendente">A-Z</option>
+                    <option value="Descendente">Z-A</option>
                 </select>
                 <select name="orderByRating" onChange={handleOrderByRating}>
                     <option value="defaulValue" disabled="disabled" selected="defaultValue">Order by rating...</option>
@@ -83,6 +85,7 @@ export default function Home() {
                     videogamesPerPage={videogamesPerPage}
                     videogames={videogames.length}
                     paginate={paginate}
+                    currentPage={currentPage}
                 />
             </div>
             <div className={styles.container}>

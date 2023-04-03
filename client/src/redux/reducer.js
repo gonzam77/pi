@@ -82,8 +82,6 @@ export default function reducer(state = initialState, { type, payload }) {
                 })
             }
         case FILTER_BY_LOCATION:
-
-            console.log(payload);
             if (payload === "database") {
                 return {
                     ...state,
