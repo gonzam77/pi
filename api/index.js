@@ -20,10 +20,12 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const getGenres = require("./src/controllers/getGenres.js")
+const getVideogamesApi = require("../api/src/controllers/getVideogamesApi.js")
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
   getGenres();
+  getVideogamesApi();
   console.log('DATABASE connected');
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
