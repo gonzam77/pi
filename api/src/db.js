@@ -7,7 +7,7 @@ const {
   DB_PASSWORD, 
   DB_HOST, 
   DB_NAME,
-  DB_DEPLOY_RENDER,
+  DB_DEPLOY,
   DB_DEPLOY_RAILWAY
 } = process.env;
 
@@ -16,7 +16,7 @@ const {
 //   logging: false, // set to console.log to see the raw SQL queries
 //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 // });
-const sequelize = new Sequelize(DB_DEPLOY_RENDER, {
+const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   dialectOptions: {

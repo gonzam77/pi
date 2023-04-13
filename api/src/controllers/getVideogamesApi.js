@@ -25,7 +25,7 @@ const getVideogamesApi = async () => {
         });
         page++;
     }
-    console.log(videogames.length);
+    
     return videogames;
 }
 
